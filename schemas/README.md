@@ -1,0 +1,1 @@
+Resmî UBL-TR XSD/Schematron dosyalarını bu klasöre koyunuz. Tüm .xsd dosyaları otomatik yüklenir.

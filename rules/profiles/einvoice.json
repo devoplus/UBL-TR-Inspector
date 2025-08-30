@@ -1,0 +1,12 @@
+{
+  "name": "einvoice",
+  "rules": {
+    "enable": [
+      "SUM-*",
+      "VAT-*",
+      "CUR-*"
+    ],
+    "disable": []
+  },
+  "schematron": "auto"
+}

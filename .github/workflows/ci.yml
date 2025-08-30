@@ -1,0 +1,16 @@
+name: ci
+on:
+  push:
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - run: dotnet restore ./src/UblTr.Cli/UblTr.Cli.csproj
+      - run: dotnet build ./src/UblTr.Cli/UblTr.Cli.csproj -c Release --no-restore
+      - run: dotnet run --project ./src/UblTr.Cli -- check ./samples/invoice-invalid.xml --profile einvoice --report json:out/report.json --fail-on error || true
+      - run: echo "CI complete"
