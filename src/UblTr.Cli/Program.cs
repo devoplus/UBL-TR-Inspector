@@ -175,6 +175,6 @@ public sealed record Report(string File, IEnumerable<Finding> XsdFindings, IEnum
             sb.AppendLine($"| Rule | {v.Id} | {v.Severity} | {Escape(v.Message)} | {v.Line} |");
         return sb.ToString();
 
-        static string Escape(string s) => s.Replace("|","\|").Replace("\n"," ");
+        static string Escape(string s) => s.Replace("|","\\|").Replace("\n"," ");
     }
 }
