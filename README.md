@@ -1,4 +1,4 @@
-# UBL-TR-Inspector
+# UBL-TR Inspector
 
 Tek komutla UBL-TR belgelerinde XSD doğrulama ve iş kuralı & aritmetik tutarlılık denetimleri yapmanızı sağlar. Kendinize özel iş kurallarını yazmanızı da destekler.
 
@@ -116,14 +116,15 @@ src/
 
 Örnek kural implementasyonu:
 ```csharp
-public class MyCustomRule : IRule
+public class MyCustomRule : IBusinessRule
 {
     public string Id => "CUSTOM-001";
+    public string Title => "Örnek iş kuralı";
     public Severity Severity => Severity.Error;
     
-    public IEnumerable<RuleViolation> Validate(XDocument document)
+    public IEnumerable<RuleViolation> Evaluate(XDocument doc, RuleContext ctx)
     {
-        // Kural mantığınız burada
+        // Kural mantığınız burada yer alır.
         yield return new RuleViolation
         {
             Id = Id,
