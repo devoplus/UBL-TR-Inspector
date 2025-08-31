@@ -49,7 +49,7 @@ E-fatura için oluşturulan örnek kontrol profilini `rules/profiles/einvoice.js
 ### Kurulum Adımları
 ```bash
 # Projeyi klonlayın
-git clone https://github.com/username/UBL-TR-Inspector.git
+git clone https://github.com/devoplus/UBL-TR-Inspector.git
 cd UBL-TR-Inspector
 
 # Projeyi derleyin
@@ -162,7 +162,7 @@ dotnet test ./tests/UblTr.Rules.Tests/
 ## Sık Sorulan Sorular (SSS)
 
 ### XSD dosyaları nereden bulabilirim?
-Resmi UBL-TR XSD dosyalarını [GİB'in resmi sitesinden](https://www.gib.gov.tr) indirebilirsiniz. İndirdiğiniz dosyaları `schemas/` klasörüne yerleştirin.
+Resmi ve güncel UBL-TR XSD dosyalarını [GİB'in resmi e-belge sitesinden](https://ebelge.gib.gov.tr/) indirebilirsiniz. İndirdiğiniz dosyaları `schemas/` klasörüne yerleştirin.
 
 ### Özel profil nasıl oluştururum?
 `rules/profiles/` klasörü altında yeni bir JSON dosyası oluşturun ve hangi kuralların etkin olacağını belirtin:
