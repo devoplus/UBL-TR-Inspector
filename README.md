@@ -1,6 +1,6 @@
 # UBL-TR Inspector
 
-![Devoplus Open Source](https://img.shields.io/badge/Open_Source-DP?label=Devoplus&labelColor=%23B60017&color=%2319191a)
+![GitHub License](https://img.shields.io/github/license/devoplus/UBL-TR-Inspector) ![Devoplus Open Source](https://img.shields.io/badge/Open_Source-DP?label=Devoplus&labelColor=%23B60017&color=%2319191a)
 
 Tek komutla UBL-TR belgelerinde XSD doğrulama ve iş kuralı & aritmetik tutarlılık denetimleri yapmanızı sağlar. Kendinize özel iş kurallarını yazmanızı da destekler.
 
