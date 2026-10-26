@@ -17,7 +17,7 @@ Tek komutla UBL-TR belgelerinde XSD doğrulama ve iş kuralı & aritmetik tutarl
 ## Hızlı Başlangıç
 
 ```bash
-# .NET 8 gerekir
+# .NET 10 gerekir
 dotnet build ./src/UblTr.Cli/UblTr.Cli.csproj -c Release
 
 # XSD + iş kuralları
@@ -45,7 +45,7 @@ E-fatura için oluşturulan örnek kontrol profilini `rules/profiles/einvoice.js
 ## Kurulum
 
 ### Gereksinimler
-- .NET 8.0 SDK veya üzeri
+- .NET 10.0 SDK veya üzeri
 - Git (geliştirme için)
 
 ### Kurulum Adımları

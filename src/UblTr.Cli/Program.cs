@@ -8,49 +8,61 @@ using UblTr.Rules.Rules;
 
 var root = new RootCommand("UBL-TR Inspector (Devoplus) – XSD + business rules validator");
 
-var fileArg = new Argument<string>("file", "UBL XML dosyası");
-var profileOpt = new Option<string?>(name: "--profile", description: "Profil adı", getDefaultValue: () => "einvoice");
-var reportOpt = new Option<string?>(name: "--report", description: "Rapor çıktı (json:path | md:path)");
-var failOnOpt = new Option<string?>(name: "--fail-on", description: "none|warn|error", getDefaultValue: () => "error");
+var fileArg = new Argument<string>("file") { Description = "UBL XML dosyası" };
+var profileOpt = new Option<string>("--profile") { Description = "Profil adı", DefaultValueFactory = _ => "einvoice" };
+var reportOpt = new Option<string?>("--report") { Description = "Rapor çıktı (json:path | md:path)" };
+var failOnOpt = new Option<string>("--fail-on") { Description = "none|warn|error", DefaultValueFactory = _ => "error" };
 
 var checkCmd = new Command("check", "XSD doğrulaması + iş kuralları");
-checkCmd.AddArgument(fileArg);
-checkCmd.AddOption(profileOpt);
-checkCmd.AddOption(reportOpt);
-checkCmd.AddOption(failOnOpt);
-checkCmd.SetHandler(async (string file, string profile, string? report, string failOn) =>
+checkCmd.Add(fileArg);
+checkCmd.Add(profileOpt);
+checkCmd.Add(reportOpt);
+checkCmd.Add(failOnOpt);
+checkCmd.SetAction(async (parseResult, cancellationToken) =>
 {
+    var file = parseResult.GetRequiredValue(fileArg);
+    var profile = parseResult.GetRequiredValue(profileOpt);
+    var report = parseResult.GetValue(reportOpt);
+    var failOn = parseResult.GetRequiredValue(failOnOpt);
+
     var r = await RunAllAsync(file, profile);
     if (!string.IsNullOrWhiteSpace(report)) await WriteReportAsync(report!, r);
     PrintConsole(r);
-    Environment.Exit(GetExitCode(r, failOn));
-}, fileArg, profileOpt, reportOpt, failOnOpt);
+    return GetExitCode(r, failOn);
+});
 
 var validateCmd = new Command("validate", "Sadece XSD doğrulaması");
-validateCmd.AddArgument(fileArg);
-validateCmd.SetHandler(async (string file) =>
+validateCmd.Add(fileArg);
+validateCmd.SetAction(async (parseResult, cancellationToken) =>
 {
+    var file = parseResult.GetRequiredValue(fileArg);
     var r = await RunXsdAsync(file);
     PrintConsole(r);
-}, fileArg);
+    return 0;
+});
 
 var rulesCmd = new Command("rules", "Sadece iş kuralları");
-rulesCmd.AddArgument(fileArg);
-rulesCmd.AddOption(profileOpt);
-rulesCmd.AddOption(reportOpt);
-rulesCmd.AddOption(failOnOpt);
-rulesCmd.SetHandler(async (string file, string profile, string? report, string failOn) =>
+rulesCmd.Add(fileArg);
+rulesCmd.Add(profileOpt);
+rulesCmd.Add(reportOpt);
+rulesCmd.Add(failOnOpt);
+rulesCmd.SetAction(async (parseResult, cancellationToken) =>
 {
+    var file = parseResult.GetRequiredValue(fileArg);
+    var profile = parseResult.GetRequiredValue(profileOpt);
+    var report = parseResult.GetValue(reportOpt);
+    var failOn = parseResult.GetRequiredValue(failOnOpt);
+
     var r = await RunRulesAsync(file, profile);
     if (!string.IsNullOrWhiteSpace(report)) await WriteReportAsync(report!, r);
     PrintConsole(r);
-    Environment.Exit(GetExitCode(r, failOn));
-}, fileArg, profileOpt, reportOpt, failOnOpt);
+    return GetExitCode(r, failOn);
+});
 
-root.AddCommand(checkCmd);
-root.AddCommand(validateCmd);
-root.AddCommand(rulesCmd);
-await root.InvokeAsync(args);
+root.Add(checkCmd);
+root.Add(validateCmd);
+root.Add(rulesCmd);
+return await root.Parse(args).InvokeAsync();
 
 static async Task<Report> RunAllAsync(string file, string profile)
 {
