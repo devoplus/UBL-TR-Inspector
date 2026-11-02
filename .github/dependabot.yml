@@ -9,3 +9,10 @@ updates:
     directory: "/src/"
     schedule:
       interval: "weekly"
+
+  # GitHub Actions surumleri de izlenir: CI'daki action'lar (checkout, setup-dotnet)
+  # NuGet ekosistemine dahil degildir ve bu giris olmadan hic guncellenmez.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
